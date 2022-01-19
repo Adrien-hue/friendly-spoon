@@ -1,6 +1,6 @@
 <?php
 
-$restaurant = $db->prepare('SELECT * FROM restaurant WHERE id = :id', [':id' => $_GET['id']], 'App\Table\Restaurant', true);
+$restaurant = App\App::getDb()->prepare('SELECT * FROM restaurant WHERE id = :id', [':id' => $_GET['id']], 'App\Table\Restaurant', true);
 
 ?>
 

@@ -9,8 +9,6 @@ if(isset($_GET['page'])){
     $page = 'home';
 }
 
-// Initializing objects
-$db = new App\Database('friendly_spoon');
 
 ob_start();
 

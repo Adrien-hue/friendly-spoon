@@ -2,6 +2,8 @@
 
 namespace App\Table;
 
+use App\App;
+
 class Restaurant
 {
     /**
@@ -37,6 +39,16 @@ class Restaurant
     public function getUrl()
     {
         return 'index.php?page=restaurant&id=' . $this->id;
+    }
+
+    public static function findAll()
+    {
+        return App::getDb()->query(
+            "SELECT restaurant.*, cookingStyle.name as cookingStyle
+            FROM restaurant 
+            LEFT JOIN cookingStyle 
+                ON restaurant.id_cookingStyle = cookingStyle.id;",
+            __CLASS__);
     }
 
     /************************************************************************************************/
