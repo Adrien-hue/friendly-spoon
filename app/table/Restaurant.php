@@ -4,8 +4,10 @@ namespace App\Table;
 
 use App\App;
 
-class Restaurant
+class Restaurant extends Table
 {
+    protected static $_table = 'restaurant';
+
     /**
      * @var integer
      */
@@ -43,12 +45,22 @@ class Restaurant
 
     public static function findAll()
     {
-        return App::getDb()->query(
+        return self::query(
             "SELECT restaurant.*, cookingStyle.name as cookingStyle
             FROM restaurant 
             LEFT JOIN cookingStyle 
-                ON restaurant.id_cookingStyle = cookingStyle.id;",
-            __CLASS__);
+                ON restaurant.id_cookingStyle = cookingStyle.id;");
+    }
+
+    public static function findAllByCookingStyle($id_cookingStyle)
+    {
+        return self::query(
+            "SELECT restaurant.*, cookingStyle.name as cookingStyle
+            FROM restaurant 
+            LEFT JOIN cookingStyle 
+                ON restaurant.id_cookingStyle = cookingStyle.id
+            WHERE cookingStyle.id = :id;",
+            [':id' => $id_cookingStyle]);
     }
 
     /************************************************************************************************/

@@ -4,20 +4,17 @@ namespace App\Table;
 
 use App\App;
 
-class CookingStyle
+class CookingStyle extends Table
 {
-    private static $_table = 'cookingStyle';
+    protected static $_table = 'cookingStyle';
 
     private int $id;
 
     private string $name;
 
-    public static function findAll()
+    public function getUrl()
     {
-        return App::getDb()->query(
-            "SELECT *
-            FROM " . self::$_table,
-            __CLASS__);
+        return 'index.php?page=cookingStyle&id=' . $this->id;
     }
 
     /************************************************************************************************/
@@ -25,7 +22,7 @@ class CookingStyle
     /**************************************  Getter & Setter  ***************************************/
     /**************************************                   ***************************************/
     /************************************************************************************************/
-    
+
     /**
      * Get the value of id
      */ 

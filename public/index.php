@@ -19,6 +19,9 @@ switch ($page) {
     case 'restaurant':
         require '../pages/restaurant.php';
         break;
+    case 'cookingStyle':
+        require '../pages/cookingStyle.php';
+        break;
     default:
         break;
 }

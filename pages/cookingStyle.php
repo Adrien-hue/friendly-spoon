@@ -1,12 +1,28 @@
-<?php 
-use App\App;
+<?php
 
-App::setTitle('Friendly Spoon');
+use App\App;
+use App\Table\CookingStyle;
+use App\Table\Restaurant;
+
+$cookingStyle = CookingStyle::find($_GET['id']);
+
+if($cookingStyle === false){
+    App::notFound();
+}
+
+App::setTitle($cookingStyle->getName());
+
+$restaurants = Restaurant::findAllByCookingStyle($_GET['id']);
+
+$cookingStyles = CookingStyle::findAll();
 ?>
+
+<h1><?= $cookingStyle->getName() ?></h1>
+
 <h2>Restaurants</h2>
 
 <ul>
-    <?php foreach(\App\Table\Restaurant::findAll() as $restaurant): ?>
+    <?php foreach($restaurants as $restaurant): ?>
         <li>
             <h3><?= $restaurant->getName(); ?></h3>
             
@@ -22,7 +38,7 @@ App::setTitle('Friendly Spoon');
 <h2>Styles de cuisine</h2>
 
 <ul>
-    <?php foreach(\App\Table\CookingStyle::findAll() as $cookingStyle): ?>
+    <?php foreach($cookingStyles as $cookingStyle): ?>
         <li>
             <h3><a href="<?= $cookingStyle->getUrl() ?>"><?= $cookingStyle->getName() ?></a></h3>
         </li>

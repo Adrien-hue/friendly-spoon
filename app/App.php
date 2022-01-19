@@ -12,6 +12,8 @@ class App
 
     private static $_database;
 
+    private static $_title = 'Friendly Spoon';
+
     public static function getDb()
     {
         if(self::$_database === null){
@@ -19,5 +21,20 @@ class App
         }
         
         return self::$_database;
+    }
+
+    public static function notFound()
+    {
+        header("HTTP/1.0 404 Not Found");
+        header('Location: index.php?page=404');
+    }
+
+    public static function getTitle(){
+        return self::$_title;
+    }
+
+    public static function setTitle($title)
+    {
+        self::$_title = $title;
     }
 }
