@@ -6,8 +6,12 @@ class Table
 {
     protected $table;
 
-    public function __construct()
+    protected $db;
+
+    public function __construct(\App\Database\MysqlDatabase $db)
     {
+        $this->db = $db;
+
         if($this->table === null){
             $class_name = explode('\\', get_class($this));
             $class_name = end($class_name);
@@ -18,8 +22,13 @@ class Table
         }
     }
 
-    public function query($statement)
+    public function find()
     {
 
+    }
+
+    public function findAll()
+    {
+        return $this->db->query('SELECT * FROM restaurant');
     }
 }

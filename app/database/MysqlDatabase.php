@@ -1,10 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Database;
 
 use \PDO;
 
-class Database
+class MysqlDatabase extends Database
 {
     /**
      * @var string
@@ -63,11 +63,15 @@ class Database
      * @param string $class_name class to return
      * @return void
      */
-    public function query(string $statement, string $class_name, bool $one = false)
+    public function query(string $statement, string $class_name = null, bool $one = false)
     {
         $req = $this->getPdo()->query($statement);
 
-        $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
+        if($class_name === null){
+            $req->setFetchMode(PDO::FETCH_OBJ);
+        } else {
+            $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
+        }
 
         if($one){
             $data = $req->fetch();
