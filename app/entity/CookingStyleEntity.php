@@ -1,18 +1,21 @@
 <?php
 
-namespace App\Table;
+namespace App\Entity;
 
-use App\App;
+use Core\Entity\Entity;
 
-class CookingStyle extends Table
+class CookingStyleEntity extends Entity
 {
-    protected static $_table = 'cookingStyle';
-
     private int $id;
 
     private string $name;
 
-    public function getUrl()
+    /**
+     * Return URL to access cooking style details
+     *
+     * @return string
+     */
+    public function getUrl():string
     {
         return 'index.php?page=cookingStyle&id=' . $this->id;
     }

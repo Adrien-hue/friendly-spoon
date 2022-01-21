@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Database;
+namespace Core\Database;
 
 use \PDO;
 
@@ -61,9 +61,10 @@ class MysqlDatabase extends Database
      *
      * @param string $statement
      * @param string $class_name class to return
-     * @return void
+     * @param boolean $one
+     * @return bool|object|array
      */
-    public function query(string $statement, string $class_name = null, bool $one = false)
+    public function query(string $statement, string $class_name = null, bool $one = false):bool|object|array
     {
         $req = $this->getPdo()->query($statement);
 
@@ -72,7 +73,7 @@ class MysqlDatabase extends Database
         } else {
             $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
         }
-
+        
         if($one){
             $data = $req->fetch();
         } else {
@@ -89,9 +90,9 @@ class MysqlDatabase extends Database
      * @param array $params
      * @param string $class_name class to return
      * @param boolean $one
-     * @return void
+     * @return bool|object|array
      */
-    public function prepare(string $statement, array $params, string $class_name, bool $one = false)
+    public function prepare(string $statement, array $params, string $class_name, bool $one = false):bool|object|array
     {
         $req = $this->getPdo()->prepare($statement);
 

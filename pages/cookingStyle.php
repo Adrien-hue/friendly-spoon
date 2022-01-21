@@ -4,17 +4,19 @@ use App\App;
 use App\Table\CookingStyle;
 use App\Table\Restaurant;
 
-$cookingStyle = CookingStyle::find($_GET['id']);
+$app = App::getInstance();
 
-if($cookingStyle === false){
-    App::notFound();
+$cookingStyle = $app->getTable('CookingStyle')->find($_GET['id']);
+
+if ($cookingStyle === false) {
+    $app->notFound();
 }
 
-App::setTitle($cookingStyle->getName());
+$app->title = $cookingStyle->getName();
 
-$restaurants = Restaurant::findAllByCookingStyle($_GET['id']);
+$restaurants = $app->getTable('Restaurant')->findAllByCookingStyle($_GET['id']);
 
-$cookingStyles = CookingStyle::findAll();
+$cookingStyles = $app->getTable('CookingStyle')->findAll();
 ?>
 
 <h1><?= $cookingStyle->getName() ?></h1>
@@ -22,12 +24,12 @@ $cookingStyles = CookingStyle::findAll();
 <h2>Restaurants</h2>
 
 <ul>
-    <?php foreach($restaurants as $restaurant): ?>
+    <?php foreach ($restaurants as $restaurant) : ?>
         <li>
             <h3><?= $restaurant->getName(); ?></h3>
-            
+
             <p><em><?= $restaurant->cookingStyle ?></em></p>
-            
+
             <p>Adresse : <?= $restaurant->getAddress() ?>, <?= $restaurant->getCp() ?> <?= $restaurant->getCity() ?></p>
 
             <p><a href="<?= $restaurant->getUrl(); ?>">Accèder aux détails</a></p>
@@ -38,7 +40,7 @@ $cookingStyles = CookingStyle::findAll();
 <h2>Styles de cuisine</h2>
 
 <ul>
-    <?php foreach($cookingStyles as $cookingStyle): ?>
+    <?php foreach ($cookingStyles as $cookingStyle) : ?>
         <li>
             <h3><a href="<?= $cookingStyle->getUrl() ?>"><?= $cookingStyle->getName() ?></a></h3>
         </li>

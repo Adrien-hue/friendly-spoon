@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Table;
+namespace App\Entity;
 
-use App\App;
+use Core\Entity\Entity;
 
-class Restaurant extends Table
+class RestaurantEntity extends Entity
 {
-    protected static $_table = 'restaurant';
-
     /**
      * @var integer
      */
@@ -38,29 +36,14 @@ class Restaurant extends Table
      */
     private string $city;
 
-    public function getUrl()
+    /**
+     * Return URL to access restaurant details
+     *
+     * @return string
+     */
+    public function getUrl():string
     {
         return 'index.php?page=restaurant&id=' . $this->id;
-    }
-
-    public static function findAll()
-    {
-        return self::query(
-            "SELECT restaurant.*, cookingStyle.name as cookingStyle
-            FROM restaurant 
-            LEFT JOIN cookingStyle 
-                ON restaurant.id_cookingStyle = cookingStyle.id;");
-    }
-
-    public static function findAllByCookingStyle($id_cookingStyle)
-    {
-        return self::query(
-            "SELECT restaurant.*, cookingStyle.name as cookingStyle
-            FROM restaurant 
-            LEFT JOIN cookingStyle 
-                ON restaurant.id_cookingStyle = cookingStyle.id
-            WHERE cookingStyle.id = :id;",
-            [':id' => $id_cookingStyle]);
     }
 
     /************************************************************************************************/

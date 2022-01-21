@@ -4,16 +4,16 @@ use App\App;
 use App\Table\CookingStyle;
 use App\Table\Restaurant;
 
-$restaurant = Restaurant::find($_GET['id']);
+$app = App::getInstance();
+
+$restaurant = $app->getTable('Restaurant')->find($_GET['id']);
 
 if($restaurant === false){
-    App::notFound();
+    $app->notFound();
 }
+$cookingStyle = $app->getTable('Restaurant')->find($restaurant->id_cookingStyle);
 
-App::setTitle($restaurant->getName());
-
-$cookingStyle = CookingStyle::find($restaurant->id_cookingStyle);
-
+$app->title = $restaurant->getName();
 ?>
 
 <h1><?= $restaurant->getName(); ?></h1>

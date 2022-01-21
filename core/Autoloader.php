@@ -1,10 +1,15 @@
 <?php
 
-namespace App;
+namespace Core;
 
 class Autoloader 
 {
 
+    /**
+     * Save the autoloader
+     *
+     * @return void
+     */
     public static function register()
     {
         spl_autoload_register(array(__CLASS__, 'autoload'));
@@ -12,12 +17,13 @@ class Autoloader
 
 
     /**
-     * Require necessary class
+     * Require necessary class corresponding to the class
      *
-     * @param string $class_name
+     * @param string $class_name name of the class to require
      * @return void
      */
-    public static function autoload(string $class){
+    public static function autoload(string $class)
+    {
         
         $class = str_replace('\\', '/', $class);
 

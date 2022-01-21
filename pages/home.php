@@ -1,12 +1,13 @@
-<?php 
+<?php
+
 use App\App;
 
-App::setTitle('Friendly Spoon');
 ?>
+
 <h2>Restaurants</h2>
 
 <ul>
-    <?php foreach(\App\Table\Restaurant::findAll() as $restaurant): ?>
+    <?php foreach(App::getInstance()->getTable('Restaurant')->findAll() as  $restaurant): ?>
         <li>
             <h3><?= $restaurant->getName(); ?></h3>
             
@@ -22,7 +23,7 @@ App::setTitle('Friendly Spoon');
 <h2>Styles de cuisine</h2>
 
 <ul>
-    <?php foreach(\App\Table\CookingStyle::findAll() as $cookingStyle): ?>
+    <?php foreach(App::getInstance()->getTable('CookingStyle')->findAll() as $cookingStyle): ?>
         <li>
             <h3><a href="<?= $cookingStyle->getUrl() ?>"><?= $cookingStyle->getName() ?></a></h3>
         </li>

@@ -1,20 +1,29 @@
 <?php
 
+define('ROOT', dirname(__DIR__));
+
 use App\App;
-use App\Autoloader;
 
-require '../app/Autoloader.php';
+require_once ROOT . '/app/App.php';
 
-Autoloader::register();
+App::load();
 
-$app = App::getInstance();
+if(isset($_GET['page'])){
+    $page = $_GET['page'];
+} else {
+    $page = 'home';
+}
 
+ob_start();
 
-$restaurant = $app->getTable('restaurant');
-$cookingStyle = $app->getTable('cookingStyle');
+if($page === 'home'){
+    require ROOT . '/pages/home.php';
+} else if ($page === 'restaurant'){
+    require ROOT . '/pages/restaurant/restaurant.php';
+} else if ($page === 'cookingStyle'){
+    require ROOT . '/pages/cookingStyle.php';
+}
 
-$restaurant->findAll();
+$content = ob_get_clean();
 
-echo '<pre>';
-var_dump($restaurant->findAll());
-echo '</pre>';
+require ROOT . '/pages/templates/default.php';
