@@ -21,7 +21,7 @@ if($page === 'home'){
 } else if ($page === 'restaurant'){
     require ROOT . '/pages/restaurant/restaurant.php';
 } else if ($page === 'cookingStyle'){
-    require ROOT . '/pages/cookingStyle.php';
+    require ROOT . '/pages/cookingStyle/cookingStyle.php';
 }
 
 $content = ob_get_clean();
