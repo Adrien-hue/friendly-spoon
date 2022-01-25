@@ -68,6 +68,14 @@ class MysqlDatabase extends Database
     {
         $req = $this->getPdo()->query($statement);
 
+        if(
+            strpos(strtoupper($statement), 'INSERT', 0) === 0 ||
+            strpos(strtoupper($statement), 'UPDATE', 0) === 0 ||
+            strpos(strtoupper($statement), 'DELETE', 0) === 0
+        ){
+            return $req;
+        }
+
         if($class_name === null){
             $req->setFetchMode(PDO::FETCH_OBJ);
         } else {
@@ -92,13 +100,25 @@ class MysqlDatabase extends Database
      * @param boolean $one
      * @return bool|object|array
      */
-    public function prepare(string $statement, array $params, string $class_name, bool $one = false):bool|object|array
+    public function prepare(string $statement, array $params, string $class_name = null, bool $one = false):bool|object|array
     {
         $req = $this->getPdo()->prepare($statement);
 
-        $req->execute($params);
+        $res = $req->execute($params);
 
-        $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
+        if(
+            strpos(strtoupper($statement), 'INSERT', 0) === 0 ||
+            strpos(strtoupper($statement), 'UPDATE', 0) === 0 ||
+            strpos(strtoupper($statement), 'DELETE', 0) === 0
+        ){
+            return $res;
+        }
+
+        if($class_name === null){
+            $req->setFetchMode(PDO::FETCH_OBJ);
+        } else {
+            $req->setFetchMode(PDO::FETCH_CLASS, $class_name);
+        }
 
         if($one){
             $data = $req->fetch();
@@ -107,5 +127,15 @@ class MysqlDatabase extends Database
         }
 
         return $data;
+    }
+
+    /**
+     * Return the id of the last inserted record
+     *
+     * @return void
+     */
+    public function lastInsertId()
+    {
+        return $this->getPdo()->lastInsertId();
     }
 }

@@ -44,6 +44,28 @@ class Table
     }
 
     /**
+     * Create a new record by its id
+     *
+     * @param integer $id
+     * @param array $fields
+     * @return bool
+     */
+    public function create(array $fields):bool
+    {
+        $inserted_fields = array();
+        $params = array();
+
+        foreach($fields as $key => $value){
+            $inserted_fields[] = "$key = :$key";
+            $params[":$key"] = $value;
+        }
+
+        $sql_part = implode(',', $inserted_fields);
+
+        return $this->query("INSERT INTO {$this->table} SET $sql_part;", $params, true);
+    }
+
+    /**
      * Retrieves specific record based on its id
      *
      * @param int $id
@@ -62,5 +84,56 @@ class Table
     public function findAll():array
     {
         return $this->query('SELECT * FROM ' . $this->table);
+    }
+
+    /**
+     * Update record by its id
+     *
+     * @param integer $id
+     * @param array $fields
+     * @return bool
+     */
+    public function update(int $id, array $fields):bool
+    {
+        $updated_fields = array();
+        $params = array();
+
+        foreach($fields as $key => $value){
+            $updated_fields[] = "$key = :$key";
+            $params[":$key"] = $value;
+        }
+
+        $params[':id'] = $id;
+
+        $sql_part = implode(',', $updated_fields);
+
+        return $this->query("UPDATE {$this->table} SET $sql_part WHERE id = :id;", $params, true);
+    }
+
+    /**
+     * Delete record by its id
+     *
+     * @param integer $id
+     * @return bool
+     */
+    public function delete(int $id):bool
+    {
+        return $this->query("DELETE FROM {$this->table} WHERE id = :id;", [':id' => $id], true);
+    }
+
+    public function toArray(int|string $key, mixed $value):array
+    {
+        $records = $this->findAll();
+        
+        $array = array();
+
+        $keyMethod = 'get' . ucfirst($key);
+        $valueMethod = 'get' . ucfirst($value);
+
+        foreach($records as $record){
+            $array[$record->$keyMethod()] = $record->$valueMethod();
+        }
+
+        return $array;
     }
 }

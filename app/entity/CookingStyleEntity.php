@@ -20,6 +20,36 @@ class CookingStyleEntity extends Entity
         return 'index.php?page=cookingStyle&id=' . $this->id;
     }
 
+    /**
+     * Return URL to access cooking style creation
+     *
+     * @return string
+     */
+    public static function getCreateUrl():string
+    {
+        return 'admin.php?page=cookingStyle&create=1';
+    }
+
+    /**
+     * Return URL to access cooking style edition
+     *
+     * @return string
+     */
+    public function getEditUrl():string
+    {
+        return 'admin.php?page=cookingStyle&edit=1&id=' . $this->id;
+    }
+
+    /**
+     * Return URL to delete cooking style
+     *
+     * @return string
+     */
+    public static function getDeleteUrl():string
+    {
+        return 'admin.php?page=cookingStyle&delete=1';
+    }
+
     /************************************************************************************************/
     /**************************************                   ***************************************/
     /**************************************  Getter & Setter  ***************************************/

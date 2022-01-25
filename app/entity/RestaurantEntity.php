@@ -19,7 +19,7 @@ class RestaurantEntity extends Entity
     /**
      * @var string
      */
-    private string $description;
+    private string|null $description;
 
     /**
      * @var string
@@ -37,6 +37,11 @@ class RestaurantEntity extends Entity
     private string $city;
 
     /**
+     * @var integer
+     */
+    private int $id_cookingStyle;
+
+    /**
      * Return URL to access restaurant details
      *
      * @return string
@@ -44,6 +49,36 @@ class RestaurantEntity extends Entity
     public function getUrl():string
     {
         return 'index.php?page=restaurant&id=' . $this->id;
+    }
+
+    /**
+     * Return URL to access restaurant creation
+     *
+     * @return string
+     */
+    public static function getCreateUrl():string
+    {
+        return 'admin.php?page=restaurant&create=1';
+    }
+
+    /**
+     * Return URL to access restaurant edition
+     *
+     * @return string
+     */
+    public function getEditUrl():string
+    {
+        return 'admin.php?page=restaurant&edit=1&id=' . $this->id;
+    }
+
+    /**
+     * Return url to delete restaurant
+     *
+     * @return string
+     */
+    public static function getDeleteUrl():string
+    {
+       return 'admin.php?page=restaurant&delete=1'; 
     }
 
     /************************************************************************************************/
@@ -103,7 +138,7 @@ class RestaurantEntity extends Entity
     /**
      * Get the value of description
      *
-     * @return  string
+     * @return  string|null
      */ 
     public function getDescription()
     {
@@ -113,7 +148,7 @@ class RestaurantEntity extends Entity
     /**
      * Set the value of description
      *
-     * @param  string  $description
+     * @param  string|null  $description
      *
      * @return  self
      */ 
@@ -192,6 +227,30 @@ class RestaurantEntity extends Entity
     public function setCity(string $city)
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of id_cookingStyle
+     *
+     * @return  integer
+     */ 
+    public function getId_cookingStyle()
+    {
+        return $this->id_cookingStyle;
+    }
+
+    /**
+     * Set the value of id_cookingStyle
+     *
+     * @param  integer  $id_cookingStyle
+     *
+     * @return  self
+     */ 
+    public function setId_cookingStyle($id_cookingStyle)
+    {
+        $this->id_cookingStyle = $id_cookingStyle;
 
         return $this;
     }

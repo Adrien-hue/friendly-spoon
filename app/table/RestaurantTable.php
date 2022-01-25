@@ -11,7 +11,7 @@ class RestaurantTable extends Table
      *
      * @return array
      */
-    public function findAll():array
+    public function findAllWithCookingStyle():array
     {
         return $this->query("SELECT restaurant.*, cookingStyle.name as cookingStyle
             FROM restaurant 

@@ -10,12 +10,12 @@ class App
     public string $title = 'Friendly Spoon';
 
     private $db_instance;
-    
+
     private static $_instance;
 
     public static function getInstance()
     {
-        if(self::$_instance === null){
+        if (self::$_instance === null) {
             self::$_instance = new App();
         }
 
@@ -42,9 +42,9 @@ class App
 
     public function getDb()
     {
-        if($this->db_instance === null){
+        if ($this->db_instance === null) {
             $config = Config::getInstance(ROOT . '/config/config.php');
-    
+
             $this->db_instance = new MysqlDatabase($config->get('db_name'), $config->get('db_user'), $config->get('db_pass'), $config->get('db_host'));
         }
 
@@ -52,13 +52,24 @@ class App
     }
 
     /**
-     * Return 404Error and redirect to the error page
+     * Return 404 Error and kill the app
      *
      * @return void
      */
     public function notFound()
-     {
-         header("HTTP/1.0 404 Not Found");
-         header('Location: index.php?page=404');
-     }
+    {
+        header("HTTP/1.0 404 Not Found");
+        die('Page introuvable !');
+    }
+
+    /**
+     * Return 403 Forbidden Header and kill the app
+     *
+     * @return void
+     */
+    public function forbidden()
+    {
+        header('HTTP/1.0 403 Forbidden');
+        die('Accès interdit !');
+    }
 }

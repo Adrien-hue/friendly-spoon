@@ -7,7 +7,7 @@ use App\App;
 <h2>Restaurants</h2>
 
 <ul>
-    <?php foreach(App::getInstance()->getTable('Restaurant')->findAll() as  $restaurant): ?>
+    <?php foreach(App::getInstance()->getTable('Restaurant')->findAllWithCookingStyle() as  $restaurant): ?>
         <li>
             <h3><?= $restaurant->getName(); ?></h3>
             
