@@ -50,26 +50,4 @@ class App
 
         return $this->db_instance;
     }
-
-    /**
-     * Return 404 Error and kill the app
-     *
-     * @return void
-     */
-    public function notFound()
-    {
-        header("HTTP/1.0 404 Not Found");
-        die('Page introuvable !');
-    }
-
-    /**
-     * Return 403 Forbidden Header and kill the app
-     *
-     * @return void
-     */
-    public function forbidden()
-    {
-        header('HTTP/1.0 403 Forbidden');
-        die('Accès interdit !');
-    }
 }

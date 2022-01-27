@@ -48,7 +48,7 @@ class RestaurantEntity extends Entity
      */
     public function getUrl():string
     {
-        return 'index.php?page=restaurant&id=' . $this->id;
+        return 'index.php?page=restaurant.show&id=' . $this->id;
     }
 
     /**
@@ -58,7 +58,7 @@ class RestaurantEntity extends Entity
      */
     public static function getCreateUrl():string
     {
-        return 'admin.php?page=restaurant&create=1';
+        return 'index.php?page=admin.restaurant.create';
     }
 
     /**
@@ -68,7 +68,7 @@ class RestaurantEntity extends Entity
      */
     public function getEditUrl():string
     {
-        return 'admin.php?page=restaurant&edit=1&id=' . $this->id;
+        return 'index.php?page=admin.restaurant.edit&id=' . $this->id;
     }
 
     /**
@@ -78,7 +78,7 @@ class RestaurantEntity extends Entity
      */
     public static function getDeleteUrl():string
     {
-       return 'admin.php?page=restaurant&delete=1'; 
+       return 'index.php?page=admin.restaurant.delete'; 
     }
 
     /************************************************************************************************/

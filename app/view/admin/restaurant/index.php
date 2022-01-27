@@ -1,16 +1,8 @@
-<?php
-
-use App\App;
-use App\Entity\RestaurantEntity;
-
-$restaurants = App::getInstance()->getTable('Restaurant')->findAllWithCookingStyle();
-
-?>
 
 <h2>Gestion des restaurants</h2>
 
 <p>
-    <a href="<?= RestaurantEntity::getCreateUrl(); ?>">Ajouter</a>
+    <a href="<?= $createUrl; ?>">Ajouter</a>
 </p>
 
 <table>
@@ -32,7 +24,7 @@ $restaurants = App::getInstance()->getTable('Restaurant')->findAllWithCookingSty
                 <td><?= $restaurant->getCity() ?></td>
                 <td>
                     <a href="<?= $restaurant->getEditUrl() ?>">Modifier</a>
-                    <form action="<?= RestaurantEntity::getDeleteUrl(); ?>" method="post">
+                    <form action="<?= $deleteUrl; ?>" method="post">
                         <input type="hidden" name="id" value="<?= $restaurant->getId(); ?>">
                         <button type="submit">Supprimer</button>
                     </form>

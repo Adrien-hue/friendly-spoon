@@ -1,16 +1,7 @@
-<?php
-
-use App\App;
-use App\Entity\CookingStyleEntity;
-
-$cookingStyles = App::getInstance()->getTable('CookingStyle')->findAll();
-
-?>
-
 <h2>Gestion des style de cuisine</h2>
 
 <p>
-    <a href="<?= CookingStyleEntity::getCreateUrl(); ?>">Ajouter</a>
+    <a href="<?= $createUrl ?>">Ajouter</a>
 </p>
 
 <table>
@@ -26,7 +17,7 @@ $cookingStyles = App::getInstance()->getTable('CookingStyle')->findAll();
                 <td><?= $cookingStyle->getName() ?></td>
                 <td>
                     <a href="<?= $cookingStyle->getEditUrl() ?>">Modifier</a>
-                    <form action="<?= CookingStyleEntity::getDeleteUrl(); ?>" method="post">
+                    <form action="<?= $deleteUrl ?>" method="post">
                         <input type="hidden" name="id" value="<?= $cookingStyle->getId(); ?>">
                         <button type="submit">Supprimer</button>
                     </form>

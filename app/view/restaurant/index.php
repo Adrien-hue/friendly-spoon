@@ -1,13 +1,7 @@
-<?php
-
-use App\App;
-
-?>
-
 <h2>Restaurants</h2>
 
 <ul>
-    <?php foreach(App::getInstance()->getTable('Restaurant')->findAllWithCookingStyle() as  $restaurant): ?>
+    <?php foreach($restaurants as  $restaurant): ?>
         <li>
             <h3><?= $restaurant->getName(); ?></h3>
             
@@ -23,9 +17,9 @@ use App\App;
 <h2>Styles de cuisine</h2>
 
 <ul>
-    <?php foreach(App::getInstance()->getTable('CookingStyle')->findAll() as $cookingStyle): ?>
+    <?php foreach($cookingStyles as $cookingStyle): ?>
         <li>
-            <h3><a href="<?= $cookingStyle->getUrl() ?>"><?= $cookingStyle->getName() ?></a></h3>
+            <h3><a href="<?= $cookingStyle->getByCookingStyleUrl() ?>"><?= $cookingStyle->getName() ?></a></h3>
         </li>
     <?php endforeach; ?>
 </ul>

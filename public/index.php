@@ -11,21 +11,19 @@ App::load();
 if(isset($_GET['page'])){
     $page = $_GET['page'];
 } else {
-    $page = 'home';
+    $page = 'restaurant.index';
 }
 
-ob_start();
+$page = explode('.', $page);
 
-if($page === 'home'){
-    require ROOT . '/pages/home.php';
-} else if ($page === 'restaurant'){
-    require ROOT . '/pages/restaurant/restaurant.php';
-} else if ($page === 'cookingStyle'){
-    require ROOT . '/pages/cookingStyle/cookingStyle.php';
-} else if ($page === 'login'){
-    require ROOT . '/pages/user/login.php';
+if($page[0] === 'admin'){
+    $controller_name = '\App\Controller\Admin\\' . ucfirst($page[1]) . 'Controller';
+    $method = $page[2];
+} else {
+    $controller_name = '\App\Controller\\' . ucfirst($page[0]) . 'Controller';
+    $method = $page[1];
 }
 
-$content = ob_get_clean();
+$controller = new $controller_name();
 
-require ROOT . '/pages/templates/default.php';
+$controller->$method();

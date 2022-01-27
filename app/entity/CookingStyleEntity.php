@@ -15,9 +15,9 @@ class CookingStyleEntity extends Entity
      *
      * @return string
      */
-    public function getUrl():string
+    public function getByCookingStyleUrl():string
     {
-        return 'index.php?page=cookingStyle&id=' . $this->id;
+        return 'index.php?page=restaurant.byCookingStyle&id=' . $this->id;
     }
 
     /**
@@ -27,7 +27,7 @@ class CookingStyleEntity extends Entity
      */
     public static function getCreateUrl():string
     {
-        return 'admin.php?page=cookingStyle&create=1';
+        return 'admin.php?page=admin.cookingStyle.create';
     }
 
     /**
@@ -37,7 +37,7 @@ class CookingStyleEntity extends Entity
      */
     public function getEditUrl():string
     {
-        return 'admin.php?page=cookingStyle&edit=1&id=' . $this->id;
+        return 'admin.php?page=admin.cookingStyle.edit&id=' . $this->id;
     }
 
     /**
@@ -47,7 +47,7 @@ class CookingStyleEntity extends Entity
      */
     public static function getDeleteUrl():string
     {
-        return 'admin.php?page=cookingStyle&delete=1';
+        return 'admin.php?page=admin.cookingStyle.delete';
     }
 
     /************************************************************************************************/

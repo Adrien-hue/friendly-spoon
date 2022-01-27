@@ -1,23 +1,3 @@
-<?php
-
-use App\App;
-use App\Table\CookingStyle;
-use App\Table\Restaurant;
-
-$app = App::getInstance();
-
-$cookingStyle = $app->getTable('CookingStyle')->find($_GET['id']);
-
-if ($cookingStyle === false) {
-    $app->notFound();
-}
-
-$app->title = $cookingStyle->getName();
-
-$restaurants = $app->getTable('Restaurant')->findAllByCookingStyle($_GET['id']);
-
-$cookingStyles = $app->getTable('CookingStyle')->findAll();
-?>
 
 <h1><?= $cookingStyle->getName() ?></h1>
 
@@ -42,7 +22,7 @@ $cookingStyles = $app->getTable('CookingStyle')->findAll();
 <ul>
     <?php foreach ($cookingStyles as $cookingStyle) : ?>
         <li>
-            <h3><a href="<?= $cookingStyle->getUrl() ?>"><?= $cookingStyle->getName() ?></a></h3>
+            <h3><a href="<?= $cookingStyle->getByCookingStyleUrl() ?>"><?= $cookingStyle->getName() ?></a></h3>
         </li>
     <?php endforeach; ?>
 </ul>
