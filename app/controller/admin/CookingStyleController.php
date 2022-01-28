@@ -22,12 +22,27 @@ class CookingStyleController extends AppController
 
         $deleteUrl = CookingStyleEntity::getDeleteUrl();
 
-        $this->render('admin/cookingStyle/index', compact('createUrl', 'cookingStyles', 'deleteUrl'));
+        return $this->render('admin/cookingStyle/index', compact('createUrl', 'cookingStyles', 'deleteUrl'));
     }
 
     public function create()
     {
+        if(!empty($_POST)){
 
+            $result = $this->CookingStyle->create(
+                [
+                    'name' => $_POST['name']
+                ]
+            );
+
+            if($result){
+                return $this->index();
+            }
+        }
+
+        $form = new Form($_POST);
+
+        return $this->render('admin/cookingStyle/edit', compact('form'));
     }
 
     public function edit()
@@ -42,7 +57,7 @@ class CookingStyleController extends AppController
             );
 
             if($result){
-                $this->index();
+                return $this->index();
             }
         }
 
@@ -50,12 +65,18 @@ class CookingStyleController extends AppController
 
         $form = new Form($cookingStyle);
 
-        $this->render('admin/cookingStyle/edit', compact('cookingStyle', 'form'));
+        return $this->render('admin/cookingStyle/edit', compact('form'));
     }
 
     public function delete()
     {
-
+        if(!empty($_POST)){
+            $result = $this->CookingStyle->delete($_POST['id']);
+        
+            if($result){
+                return $this->index();
+            }
+        }
     }
 
 }
