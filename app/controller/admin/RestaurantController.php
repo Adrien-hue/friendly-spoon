@@ -22,7 +22,7 @@ class RestaurantController extends AppController
 
         $restaurants = $this->Restaurant->findAllWithCookingStyle();
 
-        $this->render('admin/restaurant/index', compact('createUrl', 'deleteUrl', 'restaurants'));
+        return $this->render('admin/restaurant/index', compact('createUrl', 'deleteUrl', 'restaurants'));
     }
 
     public function create()
@@ -49,7 +49,7 @@ class RestaurantController extends AppController
 
         $form = new Form($_POST);
 
-        $this->render('admin/restaurant/edit', compact('title', 'form', 'cookingStyles'));
+        return $this->render('admin/restaurant/edit', compact('title', 'form', 'cookingStyles'));
     }
 
     public function edit()
@@ -78,7 +78,7 @@ class RestaurantController extends AppController
 
         $form = new Form($restaurant);
 
-        $this->render('admin/restaurant/edit', compact('title', 'form', 'cookingStyles'));
+        return $this->render('admin/restaurant/edit', compact('title', 'form', 'cookingStyles'));
     }
 
     public function delete()
@@ -87,7 +87,7 @@ class RestaurantController extends AppController
             $result = $this->Restaurant->delete($_POST['id']);
 
             if($result){
-                $this->index();
+                return $this->index();
             }
         }
     }
