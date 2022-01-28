@@ -17,7 +17,7 @@ class UserController extends AppController
             $auth = new DBAuth(App::getInstance()->getDb());
 
             if($auth->login($_POST['username'], $_POST['password'])){
-                header('Location: index.php?page=admin.restaurant.index');
+                header('Location: index.php?page=admin.app.index');
             } else {
                 $errors = true;
             }

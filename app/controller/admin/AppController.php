@@ -30,4 +30,8 @@ class AppController extends ControllerAppController
         $this->$model_name = App::getInstance()->getTable($model_name);
     }
 
+    public function index()
+    {
+        $this->render('admin/index');
+    }
 }
