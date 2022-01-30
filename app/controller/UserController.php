@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\App;
 use Core\Auth\DBAuth;
-use Core\Html\Form;
+use Core\Html\BootstrapForm;
 
 class UserController extends AppController
 {
+
+    protected $template = 'signin';
 
     public function login()
     {
@@ -23,7 +25,7 @@ class UserController extends AppController
             }
 
         }
-        $form = new Form($_POST);
+        $form = new BootstrapForm($_POST);
 
         $this->render('user/login', compact('form', 'errors'));
     }

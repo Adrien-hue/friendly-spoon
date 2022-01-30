@@ -2,27 +2,8 @@
 
 namespace Core\Html;
 
-/**
- * Class Form
- * 
- * Generate form
- */
-class Form
+class BootstrapForm extends Form
 {
-    /**
-     * Data use by the form
-     *
-     * @var array|object
-     */
-    protected $data = [];
-
-    /**
-     * Tag used to surrond HTML
-     *
-     * @var string
-     */
-    protected string $surround = "div";
-
     /**
      * Create new instance
      *
@@ -30,7 +11,7 @@ class Form
      */
     public function __construct($data = [])
     {
-        $this->data = $data;
+        parent::__construct($data);
     }
 
     /**
@@ -41,22 +22,23 @@ class Form
      */
     protected function surround(string $html):string
     {
-        return "<{$this->surround}>$html</{$this->surround}>";
+        return "<{$this->surround} class=\"input-group flex-nowrap mb-3\">$html</{$this->surround}>";
     }
 
-    /**
-     * Return the value at specific index
-     *
-     * @param string $key
-     * @return void
-     */
-    protected function getValue(string $key)
+    public function label(string $name, string $label)
     {
-        if(is_object($this->data)){
-            $method = 'get' . ucfirst($key);
-            return $this->data->$method();
+        return "<label for=\"$name\" class=\"form-label\">$label :</label>";
+    }
+
+    public function addons(array $contents = []):string
+    {
+        $addons = "";
+
+        foreach($contents as $content){
+            $addons .= "<span class=\"input-group-text\">$content</span>";
         }
-        return (isset($this->data[$key])) ? $this->data[$key] : null;
+
+        return $addons;
     }
 
     /**
@@ -69,17 +51,23 @@ class Form
      */
     public function input(string $name, string $label, array $params = []):string
     {
-        $label = "<label for=\"$name\">$label :</label>";
+        if($label != ""){
+            $label = $this->label($name, $label);
+        }
 
         $type = (isset($params['type']) && $params['type'] !== "") ? $params['type'] : 'text';
 
+        $placeholder = (isset($params['placeholder']) && $params['placeholder'] !== "") ? "placeholder=\"" . $params['placeholder'] . "\"" : "";
+
+        $before_addons = (isset($params['b-addons'])) ? $this->addons($params['b-addons']) : "";
+
         if($type === 'textarea'){
-            $input = "<textarea name=\"$name\" id=\"$name\" cols=\"30\" rows=\"10\">{$this->getValue($name)}</textarea>";
+            $input = "<textarea name=\"$name\" id=\"$name\" $placeholder cols=\"30\" rows=\"10\">{$this->getValue($name)}</textarea>";
         } else {
-            $input = "<input type=\"$type\" id=\"$name\" name=\"$name\" value=\"{$this->getValue($name)}\">";
+            $input = "<input type=\"$type\" id=\"$name\" name=\"$name\" value=\"{$this->getValue($name)}\" $placeholder class=\"form-control\">";
         }
 
-        return $this->surround($label . $input);
+        return $label . $this->surround($before_addons . $input);
     }
 
     /**
@@ -92,7 +80,9 @@ class Form
      */
     public function select(string $name, string $label, array $options = []):string
     {
-        $label = "<label for=\"$name\">$label :</label>";
+        if($label != ""){
+            $label = "<label for=\"$name\" class=\"form-label\">$label :</label>";
+        }
 
         $select = "<select name=\"$name\" id=\"$name\">";
 

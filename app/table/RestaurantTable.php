@@ -34,4 +34,14 @@ class RestaurantTable extends Table
             WHERE cookingStyle.id = :id;",
             [':id' => $id_cookingStyle]);
     }
+
+    public function findRandom($limit = 3)
+    {
+        return $this->query("SELECT restaurant.*, cookingStyle.name as cookingStyle
+            FROM restaurant 
+            LEFT JOIN cookingStyle 
+                ON restaurant.id_cookingStyle = cookingStyle.id
+            ORDER BY RAND()
+            LIMIT $limit;");
+    }
 }

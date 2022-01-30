@@ -20,6 +20,18 @@ class AppController extends Controller
     }
 
     /**
+     * Load home page
+     */
+    public function index()
+    {
+        $this->loadModel('Restaurant');
+        
+        $restaurants = $this->Restaurant->findRandom(3);
+
+        return $this->render('index', compact('restaurants'));
+    }
+
+    /**
      * Return 404 Error and kill the app
      *
      * @return void

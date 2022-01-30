@@ -1,7 +1,3 @@
-<?php
-
-use App\App;
-?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -10,14 +6,14 @@ use App\App;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
-    <title><?= App::getInstance()->title ?></title>
+    <title>Friendly Spoon</title>
 </head>
-<body>
+<body class="bg-dark text-light">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
-                <a class="navbar-brand" href="index.php?page=restaurant.index">
-                    <img src="image/logo.svg" width="40" height="40" alt="logo">
+                <a class="navbar-brand" href="index.php?page=app.index">
+                    <img src="image/logo.svg" width="60" height="60" alt="logo">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +23,7 @@ use App\App;
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="index.php?page=restaurant.index">Accueil</a>
+                            <a class="nav-link active" aria-current="page" href="index.php?page=app.index">Accueil</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=admin.app.index">Administration</a>
@@ -43,7 +39,7 @@ use App\App;
     </header>
 
     <main>
-        <div class="container">
+        <div class="container bg-gray-dark">
             <?= $content; ?>
         </div>
     </main>
