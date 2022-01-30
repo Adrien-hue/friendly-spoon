@@ -3,6 +3,7 @@
 namespace Core\Database;
 
 use \PDO;
+use PDOException;
 
 class MysqlDatabase extends Database
 {
@@ -66,7 +67,15 @@ class MysqlDatabase extends Database
      */
     public function query(string $statement, string $class_name = null, bool $one = false):bool|object|array
     {
-        $req = $this->getPdo()->query($statement);
+        
+
+        try{
+            $req = $this->getPdo()->query($statement);
+        } catch (PDOException $errPdo){
+            echo 'Erreur SQL : ' . $errPdo->getMessage() . "<br>";
+            
+            echo "Query : <br>" . $req->debugDumpParams();
+        }
 
         if(
             strpos(strtoupper($statement), 'INSERT', 0) === 0 ||
@@ -104,7 +113,13 @@ class MysqlDatabase extends Database
     {
         $req = $this->getPdo()->prepare($statement);
 
-        $res = $req->execute($params);
+        try{
+            $res = $req->execute($params);
+        } catch (PDOException $errPdo){
+            echo 'Erreur SQL : ' . $errPdo->getMessage() . "<br>";
+            
+            echo "Query : <br>" . $req->debugDumpParams();
+        }
 
         if(
             strpos(strtoupper($statement), 'INSERT', 0) === 0 ||
