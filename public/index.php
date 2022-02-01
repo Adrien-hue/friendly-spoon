@@ -2,6 +2,9 @@
 
 define('ROOT', dirname(__DIR__));
 
+error_reporting(-1);
+ini_set('display_errors', 1);
+
 use App\App;
 
 require_once ROOT . '/app/App.php';
@@ -13,7 +16,7 @@ if(isset($_GET['page'])){
 } else {
     $page = 'restaurant.index';
 }
-
+// URL like : controller.view or admin.controller.view
 $page = explode('.', $page);
 
 if($page[0] === 'admin'){
