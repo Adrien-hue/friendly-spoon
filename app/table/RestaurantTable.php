@@ -6,6 +6,13 @@ use Core\Table\Table;
 
 class RestaurantTable extends Table
 {
+    public function find(int $id):bool|object
+    {
+        $restaurant = parent::find($id);
+
+        return $restaurant;
+    }
+
     /**
      * Retrieves all records from the table restaurant with the associated CookingStyle
      *
@@ -13,10 +20,12 @@ class RestaurantTable extends Table
      */
     public function findAllWithCookingStyle():array
     {
-        return $this->query("SELECT restaurant.*, cookingStyle.name as cookingStyle
+        return $this->query("SELECT restaurant.*
             FROM restaurant 
-            LEFT JOIN cookingStyle 
-                ON restaurant.id_cookingStyle = cookingStyle.id;");
+            LEFT JOIN cookStyle 
+                ON restaurant.id = cookStyle.id_restaurant
+            JOIN cookingStyle
+                ON cookStyle.id_cookingStyle = cookingStyle.id;");
     }
 
     /**
@@ -27,20 +36,24 @@ class RestaurantTable extends Table
      */
     public function findAllByCookingStyle(int $id_cookingStyle):array
     {
-        return $this->query("SELECT restaurant.*, cookingStyle.name as cookingStyle
-            FROM restaurant 
-            LEFT JOIN cookingStyle 
-                ON restaurant.id_cookingStyle = cookingStyle.id
-            WHERE cookingStyle.id = :id;",
-            [':id' => $id_cookingStyle]);
+        return $this->query('SELECT restaurant.* 
+            FROM restaurant
+            JOIN cookStyle
+                ON restaurant.id = cookStyle.id_restaurant
+            WHERE cookStyle.id_cookingStyle = :id_cookingStyle;',
+            [':id_cookingStyle' => $id_cookingStyle]);
     }
 
-    public function findRandom($limit = 3)
+    /**
+     * Retrieves random records
+     *
+     * @param integer $limit
+     * @return array
+     */
+    public function findRandom($limit = 3):array
     {
-        return $this->query("SELECT restaurant.*, cookingStyle.name as cookingStyle
-            FROM restaurant 
-            LEFT JOIN cookingStyle 
-                ON restaurant.id_cookingStyle = cookingStyle.id
+        return $this->query("SELECT restaurant.*
+            FROM restaurant
             ORDER BY RAND()
             LIMIT $limit;");
     }

@@ -37,9 +37,9 @@ class RestaurantEntity extends Entity
     private string $city;
 
     /**
-     * @var integer
+     * @var array
      */
-    private int $id_cookingStyle;
+    private array $cookingStyles;
 
     /**
      * Return URL to access restaurant details
@@ -79,6 +79,17 @@ class RestaurantEntity extends Entity
     public static function getDeleteUrl():string
     {
        return 'index.php?page=admin.restaurant.delete'; 
+    }
+
+    public function showCookingStyles()
+    {
+        $cookingStyles = array();
+
+        foreach($this->cookingStyles as $cookingStyle){
+            $cookingStyles[] = $cookingStyle->getName();
+        }
+
+        return implode(', ', $cookingStyles);
     }
 
     /************************************************************************************************/
@@ -232,25 +243,25 @@ class RestaurantEntity extends Entity
     }
 
     /**
-     * Get the value of id_cookingStyle
+     * Get the value of cookingStyles
      *
      * @return  integer
      */ 
-    public function getId_cookingStyle()
+    public function getCookingStyles()
     {
-        return $this->id_cookingStyle;
+        return $this->cookingStyles;
     }
 
     /**
-     * Set the value of id_cookingStyle
+     * Set the value of cookingStyles
      *
-     * @param  integer  $id_cookingStyle
+     * @param  integer  $cookingStyles
      *
      * @return  self
      */ 
-    public function setId_cookingStyle($id_cookingStyle)
+    public function setCookingStyles($cookingStyles)
     {
-        $this->id_cookingStyle = $id_cookingStyle;
+        $this->cookingStyles = $cookingStyles;
 
         return $this;
     }

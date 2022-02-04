@@ -25,9 +25,17 @@ class AppController extends Controller
     public function index()
     {
         $this->loadModel('Restaurant');
-        
+        $this->loadModel('CookingStyle');
+
         $restaurants = $this->Restaurant->findRandom(3);
 
+        foreach ($restaurants as $restaurant) {
+            $id_restaurant = $restaurant->getId();
+
+            $cookingStyles = $this->CookingStyle->findAllByRestaurant($id_restaurant);
+
+            $restaurant->setCookingStyles($cookingStyles);
+        }
         return $this->render('index', compact('restaurants'));
     }
 

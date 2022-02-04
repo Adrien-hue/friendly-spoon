@@ -12,15 +12,32 @@ class RestaurantController extends AppController
         $this->loadModel('CookingStyle');
     }
 
+    /**
+     * Load listing
+     *
+     * @return void
+     */
     public function index()
     {
         $restaurants = $this->Restaurant->findAllWithCookingStyle();
+
+        foreach($restaurants as $restaurant){
+            $cookingStyles = $this->CookingStyle->findAllByRestaurant($restaurant->getId());
+
+            $restaurant->setCookingStyles($cookingStyles);
+        }
+
         $cookingStyles = $this->CookingStyle->findAll();
 
 
         $this->render('restaurant/index', compact('restaurants', 'cookingStyles'));
     }
 
+    /**
+     * Load listing by cooking style
+     *
+     * @return void
+     */
     public function byCookingStyle()
     {
         
@@ -33,23 +50,39 @@ class RestaurantController extends AppController
         $this->title = $cookingStyle->getName();
         
         $restaurants = $this->Restaurant->findAllByCookingStyle($_GET['id']);
+
+        foreach($restaurants as $restaurant){
+            $cookingStyles = $this->CookingStyle->findAllByRestaurant($restaurant->getId());
+
+            $restaurant->setCookingStyles($cookingStyles);
+        }
         
         $cookingStyles = $this->CookingStyle->findAll();
 
         $this->render('restaurant/byCookingStyle', compact('cookingStyle', 'restaurants', 'cookingStyles'));
     }
 
+    /**
+     * Load detail restaurant page
+     *
+     * @return void
+     */
     public function show()
     {   
-        $restaurant = $this->Restaurant->find($_GET['id']);
+        $id = $_GET['id'];
+
+        $restaurant = $this->Restaurant->find($id);
         
         if($restaurant === false){
             $this->notFound();
         }
-        $cookingStyle = $this->CookingStyle->find($restaurant->getId_cookingStyle());
+
+        $cookingStyles = $this->CookingStyle->findAllByRestaurant($id);
+
+        $restaurant->setCookingStyles($cookingStyles);
         
         $this->title = $restaurant->getName();
 
-        $this->render('restaurant/restaurant', compact('restaurant', 'cookingStyle'));
+        return $this->render('restaurant/restaurant', compact('restaurant'));
     }
 }

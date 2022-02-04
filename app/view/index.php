@@ -14,7 +14,7 @@
                     <div class="card-img-overlay d-flex flex-column justify-content-between">
                         <div class="card-title bg-light bg-opacity-75">
                             <h5><?= $restaurant->getName(); ?></h5>
-                            <em><?= $restaurant->cookingStyle ?></em>
+                            <em><?= $restaurant->showCookingStyles(); ?></em>
                         </div>
                         <a href="<?= $restaurant->getUrl(); ?>" class="btn btn-primary">Miam !!</a>
                     </div>

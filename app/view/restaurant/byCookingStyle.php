@@ -8,7 +8,7 @@
         <li>
             <h3><?= $restaurant->getName(); ?></h3>
 
-            <p><em><?= $restaurant->cookingStyle ?></em></p>
+            <p><em><?= $restaurant->showCookingStyles(); ?></em></p>
 
             <p>Adresse : <?= $restaurant->getAddress() ?>, <?= $restaurant->getCp() ?> <?= $restaurant->getCity() ?></p>
 
