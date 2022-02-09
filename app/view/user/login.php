@@ -6,7 +6,7 @@
 
 <div class="card login-card">
     <div class="me-3">
-        <img src="image/signin.jpeg" alt="sign in image" class="img-fluid login-card-img">
+        <img src="image/user/signin.jpeg" alt="sign in image" class="img-fluid login-card-img">
     </div>
 
     <div class="m-2 flex-fill">
