@@ -48,12 +48,21 @@ class Form
      * Return the value at specific index
      *
      * @param string $key
-     * @return void
+     * @return mixed
      */
     protected function getValue(string $key)
     {
         if(is_object($this->data)){
             $method = 'get' . ucfirst($key);
+
+            if(is_array($this->data->$method())){
+                $values = array();
+                foreach($this->data->$method() as $row){
+                    $values[] = $row->getId();
+                }
+                return $values;
+            }
+
             return $this->data->$method();
         }
         return (isset($this->data[$key])) ? $this->data[$key] : null;
@@ -90,11 +99,16 @@ class Form
      * @param array $options
      * @return string
      */
-    public function select(string $name, string $label, array $options = []):string
+    public function select(string $name, string $label, array $options = [], array $params = []):string
     {
         $label = "<label for=\"$name\">$label :</label>";
 
-        $select = "<select name=\"$name\" id=\"$name\">";
+        $multiple = '';
+        if(isset($params['multiple']) && $params['multiple'] == 1){
+            $multiple = 'multiple';
+        }
+
+        $select = "<select name=\"$name\" id=\"$name\" $multiple>";
 
         foreach($options as $opt => $value){
             $attributes = "";

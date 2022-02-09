@@ -22,7 +22,7 @@ class BootstrapForm extends Form
      */
     protected function surround(string $html):string
     {
-        return "<{$this->surround} class=\"input-group flex-nowrap mb-3\">$html</{$this->surround}>";
+        return "<{$this->surround} class=\"input-group flex-nowrap align-items-center mb-3\">$html</{$this->surround}>";
     }
 
     public function label(string $name, string $label)
@@ -78,18 +78,28 @@ class BootstrapForm extends Form
      * @param array $options
      * @return string
      */
-    public function select(string $name, string $label, array $options = []):string
+    public function select(string $name, string $label, array $options = [], array $params = []):string
     {
         if($label != ""){
             $label = "<label for=\"$name\" class=\"form-label\">$label :</label>";
         }
 
-        $select = "<select name=\"$name\" id=\"$name\">";
+        $multiple = '';
+        if(isset($params['multiple']) && $params['multiple'] == 1){
+            $multiple = 'multiple';
+        }
+
+        $placeholder = '';
+        if(isset($params['placeholder']) && $params['placeholder'] != ''){
+            $placeholder = "placeholder=\"".$params['placeholder']."\"";
+        }
+
+        $select = "<select name=\"$name\" id=\"$name\" class=\"form-select\" $multiple $placeholder>";
 
         foreach($options as $opt => $value){
             $attributes = "";
 
-            if($opt == $this->getValue($name)){
+            if(in_array($opt, $this->getValue(rtrim($name, '[]')))){
                 $attributes = "selected";
             }
 
@@ -98,6 +108,6 @@ class BootstrapForm extends Form
         
         $select .= "</select>";
 
-        return $this->surround($label . $select);
+        return $label . $this->surround($select);
     }
 }

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,9 @@
     <link rel="stylesheet" href="css/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
     <title>Friendly Spoon</title>
+    <link rel="icon" type="image/x-icon" href="image/logo.svg">
 </head>
+
 <body class="bg-dark text-light">
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -19,7 +22,7 @@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
@@ -46,4 +49,5 @@
 
 </body>
 <script src="js/bootstrap/bootstrap.js"></script>
+<script src="js/main.js"></script>
 </html>

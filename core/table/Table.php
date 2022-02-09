@@ -48,9 +48,9 @@ class Table
      *
      * @param integer $id
      * @param array $fields
-     * @return bool
+     * @return int
      */
-    public function create(array $fields):bool
+    public function create(array $fields)
     {
         $inserted_fields = array();
         $params = array();
@@ -62,7 +62,9 @@ class Table
 
         $sql_part = implode(',', $inserted_fields);
 
-        return $this->query("INSERT INTO {$this->table} SET $sql_part;", $params, true);
+        $this->query("INSERT INTO {$this->table} SET $sql_part;", $params, true);
+
+        return $this->db->lastInsertId();
     }
 
     /**

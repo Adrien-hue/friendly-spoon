@@ -2,7 +2,8 @@
 
 namespace App\Controller\Admin;
 
-use Core\Html\Form;
+use App\App;
+use Core\Html\BootstrapForm;
 use App\Entity\RestaurantEntity;
 
 class RestaurantController extends AppController
@@ -15,6 +16,11 @@ class RestaurantController extends AppController
         $this->loadModel('CookingStyle');
     }
 
+    /**
+     * Load listing
+     *
+     * @return void
+     */
     public function index()
     {
         $createUrl = RestaurantEntity::getCreateUrl();
@@ -25,20 +31,29 @@ class RestaurantController extends AppController
         return $this->render('admin/restaurant/index', compact('createUrl', 'deleteUrl', 'restaurants'));
     }
 
+    /**
+     * Load creation page and create restaurant
+     *
+     * @return void
+     */
     public function create()
     {
-        if(!empty($_POST)){
-            $result = $this->Restaurant->create(
+        if (!empty($_POST)) {
+            
+            $id_restaurant = $this->Restaurant->create(
                 [
                     'name' => $_POST['name'],
                     'address' => $_POST['address'],
                     'cp' => $_POST['cp'],
-                    'city' => $_POST['city'],
-                    'id_cookingStyle' => $_POST['id_cookingStyle']
+                    'city' => $_POST['city']
                 ]
             );
 
-            if($result){
+            foreach($_POST['cookingStyles'] as $cookingStyle){
+                $this->Restaurant->linkCookingStyle($cookingStyle, $id_restaurant);
+            }
+
+            if ($id_restaurant) {
                 return $this->index();
             }
         }
@@ -47,46 +62,68 @@ class RestaurantController extends AppController
 
         $cookingStyles = $this->CookingStyle->toArray('id', 'name');
 
-        $form = new Form($_POST);
+        $form = new BootstrapForm($_POST);
 
         return $this->render('admin/restaurant/edit', compact('title', 'form', 'cookingStyles'));
     }
 
+    /**
+     * Load edition page and update restaurant
+     *
+     * @return void
+     */
     public function edit()
     {
-        if(!empty($_POST)){
+        $id_restaurant = $_GET['id'];
+
+        if (!empty($_POST)) {
             $result = $this->Restaurant->update(
-                $_GET['id'],
+                $id_restaurant,
                 [
                     'name' => $_POST['name'],
                     'address' => $_POST['address'],
                     'cp' => $_POST['cp'],
-                    'city' => $_POST['city'],
-                    'id_cookingStyle' => $_POST['id_cookingStyle']
+                    'city' => $_POST['city']
                 ]
             );
 
-            if($result){
+            $this->Restaurant->unlinkedCookingStyles($id_restaurant);
+
+            foreach($_POST['cookingStyles'] as $cookingStyle){
+                $this->Restaurant->linkCookingStyle($cookingStyle, $id_restaurant);
+            }
+
+            if ($result) {
                 return $this->index();
             }
         }
 
         $title = "Modification du restaurant";
 
-        $restaurant = $this->Restaurant->find($_GET['id']);
+        $restaurant = $this->Restaurant->find($id_restaurant);
+
+        $cookingStyles = $this->CookingStyle->findAllByRestaurant($restaurant->getId());
+
+        $restaurant->setCookingStyles($cookingStyles);
+
         $cookingStyles = $this->CookingStyle->toArray('id', 'name');
 
-        $form = new Form($restaurant);
+        $form = new BootstrapForm($restaurant);
 
         return $this->render('admin/restaurant/edit', compact('title', 'form', 'cookingStyles'));
     }
 
+    /**
+     * Delete restaurant
+     *
+     * @return void
+     */
     public function delete()
     {
-        if(!empty($_POST)){
+        if (!empty($_POST)) {
             $result = $this->Restaurant->delete($_POST['id']);
 
-            if($result){
+            if ($result) {
                 return $this->index();
             }
         }

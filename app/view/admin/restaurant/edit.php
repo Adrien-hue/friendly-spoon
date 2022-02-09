@@ -6,7 +6,7 @@
     <?= $form->input('cp', 'Code postal') ?>
     <?= $form->input('city', 'Ville') ?>
 
-    <?= $form->select('id_cookingStyle', 'Cuisine', $cookingStyles) ?>
+    <?= $form->select('cookingStyles[]', 'Cuisine', $cookingStyles, ['multiple' => 1, 'placeholder' => 'Sélectionner un style de cuisine']) ?>
 
     <button type="submit">Sauvegarder</button>
 </form>

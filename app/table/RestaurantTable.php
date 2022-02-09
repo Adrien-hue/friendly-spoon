@@ -57,4 +57,32 @@ class RestaurantTable extends Table
             ORDER BY RAND()
             LIMIT $limit;");
     }
+
+    /**
+     * Link a cooking style to as restaurant
+     *
+     * @param integer $id_cookingStyle
+     * @param integer $id
+     * @return void
+     */
+    public function linkCookingStyle(int $id_cookingStyle, int $id)
+    {
+        return $this->query("INSERT INTO cookStyle
+            SET id_cookingStyle = :id_cookingStyle,
+                id_restaurant = :id;",
+            [':id_cookingStyle' => $id_cookingStyle, ':id' => $id]);
+    }
+
+    /**
+     * Delete all cooking styles linked to a restaurant
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function unlinkedCookingStyles(int $id)
+    {
+        return $this->query("DELETE FROM cookStyle
+            WHERE id_restaurant = :id",
+            [':id' => $id]);
+    }
 }
